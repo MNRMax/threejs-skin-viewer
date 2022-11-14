@@ -1,7 +1,7 @@
 import "./style.css"
 import * as THREE from "three"
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls'
-import { addStar, renderBody, renderHead, renderHelmet, renderLeftArm, renderLeftLeg, renderRightArm, renderRightLeg, renderRightSleeve, renderLeftSleeve, renderBodySecondLayer, renderLeftLegSleeve, renderRightLegSleeve } from "./renders.js";
+import { addStar, renderBody, renderHead, renderHelmet, renderLeftArm, renderLeftLeg, renderRightArm, renderRightLeg, renderRightSleeve, renderLeftSleeve, renderBodySecondLayer, renderLeftLegSleeve, renderRightLegSleeve, renderCape } from "./renders.js";
 
 //setup
 var clock = new THREE.Clock();
@@ -18,16 +18,17 @@ camera.position.setZ(30);
 
 document.querySelector('#submit').addEventListener("click", function() {
     console.log('test')
-    let rawData = get(`https://api.ashcon.app/mojang/v2/user/${document.querySelector("#name").value}`)
-    let data = JSON.parse(rawData)
-    renderSkin(`https://crafatar.com/skins/${data.uuid}?overlay&default=MHF_SAlex`)
+    renderSkin(document.querySelector("#minecraftname").value)
 })
 
-let rawData = get(`https://api.ashcon.app/mojang/v2/user/MNRMax`)
-let data = JSON.parse(rawData)
-renderSkin(`https://crafatar.com/skins/${data.uuid}?overlay&default=MHF_SAlex`)
+renderSkin("MNRMax")
 
-function renderSkin(skin) {
+function renderSkin(name) {
+    let rawData = get(`https://api.ashcon.app/mojang/v2/user/${name}`)
+    let data = JSON.parse(rawData)
+    const skin = `https://crafatar.com/skins/${data.uuid}?overlay&default=MHF_SAlex`
+    const capeURL = `https://crafatar.com/capes/${data.uuid}?overlay&default=MHF_SAlex`
+    
     scene.clear()
     scene.add(new THREE.AmbientLight(0xFFFFFF))
     Array(200).fill().forEach(function() {scene.add(addStar())})
@@ -44,12 +45,13 @@ function renderSkin(skin) {
     const helmet = renderHelmet(skin)
     const rightSleeve = renderRightSleeve(skin)
     const leftSleeve = renderLeftSleeve(skin)
-    scene.add(rightArm, leftArm, rightLeg, head, body, leftLeg, helmet, rightSleeve, leftSleeve, BodySecondLayer, LeftLegSleeve)
+    const cape = renderCape(capeURL)
+    scene.add(rightArm, leftArm, rightLeg, head, body, leftLeg, helmet, rightSleeve, leftSleeve, BodySecondLayer, LeftLegSleeve, RightLegSleeve, cape)
 }
 
 const controls = new OrbitControls(camera, renderer.domElement);
-controls.enableZoom = false;
-controls.enablePan = false;
+// controls.enableZoom = false;
+// controls.enablePan = false;
 controls.autoRotate = true
 controls.autoRotateSpeed = 5
 controls.enableDamping = true
