@@ -1,7 +1,7 @@
 import "./style.css"
 import * as THREE from "three"
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls'
-import { addStar, renderBody, renderHead, renderHelmet, renderLeftArm, renderLeftLeg, renderRightArm, renderRightLeg, renderRightSleeve, renderLeftSleeve, renderBodySecondLayer, renderLeftLegSleeve } from "./renders.js";
+import { addStar, renderBody, renderHead, renderHelmet, renderLeftArm, renderLeftLeg, renderRightArm, renderRightLeg, renderRightSleeve, renderLeftSleeve, renderBodySecondLayer, renderLeftLegSleeve, renderRightLegSleeve } from "./renders.js";
 
 //setup
 var clock = new THREE.Clock();
@@ -23,6 +23,10 @@ document.querySelector('#submit').addEventListener("click", function() {
     renderSkin(`https://crafatar.com/skins/${data.uuid}?overlay&default=MHF_SAlex`)
 })
 
+let rawData = get(`https://api.ashcon.app/mojang/v2/user/MNRMax`)
+let data = JSON.parse(rawData)
+renderSkin(`https://crafatar.com/skins/${data.uuid}?overlay&default=MHF_SAlex`)
+
 function renderSkin(skin) {
     scene.clear()
     scene.add(new THREE.AmbientLight(0xFFFFFF))
@@ -36,25 +40,23 @@ function renderSkin(skin) {
     const leftArm = renderLeftArm(skin)
     const leftLeg = renderLeftLeg(skin)
     const LeftLegSleeve = renderLeftLegSleeve(skin)
+    const RightLegSleeve = renderRightLegSleeve(skin)
     const helmet = renderHelmet(skin)
     const rightSleeve = renderRightSleeve(skin)
     const leftSleeve = renderLeftSleeve(skin)
     scene.add(rightArm, leftArm, rightLeg, head, body, leftLeg, helmet, rightSleeve, leftSleeve, BodySecondLayer, LeftLegSleeve)
 }
 
-
-//light
-const pointLight = new THREE.AmbientLight(0xFFFFFF)
-scene.add(pointLight)
-
 const controls = new OrbitControls(camera, renderer.domElement);
 controls.enableZoom = false;
 controls.enablePan = false;
-camera.setFocalLength(5)
+controls.autoRotate = true
+controls.autoRotateSpeed = 5
+controls.enableDamping = true
+camera.setFocalLength(8)
 
 function animate() {
     requestAnimationFrame( animate)
-    cube.rotation.y += 2 * clock.getDelta();
     controls.update()
     renderer.render(scene, camera);
 }
@@ -62,7 +64,7 @@ function animate() {
 const spaceTexture = new THREE.TextureLoader().load('space.jpg')
 scene.background = spaceTexture;
 
-Array(200).fill().forEach(function() {scene.add(addStar())})
+Array(800).fill().forEach(function() {scene.add(addStar())})
 animate()
 
 function get(url) {

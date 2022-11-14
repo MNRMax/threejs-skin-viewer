@@ -18,6 +18,7 @@ export function renderHead(url) {
 
     const materials = headTextures.map(e => new THREE.MeshStandardMaterial({ map: e }))
     const cube = new THREE.Mesh(cubeGeometry, materials)
+    cube.position.set(0, 10, 0)
     return cube;
 }
 export function renderBody(url) {
@@ -46,7 +47,7 @@ export function renderBody(url) {
 
     const materials = bodyTextures.map(e => new THREE.MeshStandardMaterial({ map: e }))
     const cube = new THREE.Mesh(cubeGeometry, materials)
-    cube.position.set(0, -10, 0)
+    cube.position.set(0, 0, 0)
     return cube;
 }
 
@@ -76,7 +77,7 @@ export function renderRightArm(url) {
 
     const materials = bodyTextures.map(e => new THREE.MeshStandardMaterial({ map: e }))
     const cube = new THREE.Mesh(cubeGeometry, materials)
-    cube.position.set(-6, -10, 0)
+    cube.position.set(-6, 0, 0)
     return cube;
 }
 
@@ -106,7 +107,7 @@ export function renderRightLeg(url) {
 
     const materials = bodyTextures.map(e => new THREE.MeshStandardMaterial({ map: e }))
     const cube = new THREE.Mesh(cubeGeometry, materials)
-    cube.position.set(-2, -22, 0)
+    cube.position.set(-2, -12, 0)
     return cube;
 }
 
@@ -136,7 +137,7 @@ export function renderLeftArm(url) {
 
     const materials = bodyTextures.map(e => new THREE.MeshStandardMaterial({ map: e }))
     const cube = new THREE.Mesh(cubeGeometry, materials)
-    cube.position.set(6, -10, 0)
+    cube.position.set(6, 0, 0)
     return cube;
 }
 
@@ -166,7 +167,7 @@ export function renderLeftLeg(url) {
 
     const materials = bodyTextures.map(e => new THREE.MeshStandardMaterial({ map: e }))
     const cube = new THREE.Mesh(cubeGeometry, materials)
-    cube.position.set(2, -22, 0)
+    cube.position.set(2, -12, 0)
     return cube;
 }
 
@@ -188,6 +189,7 @@ export function renderHelmet(url) {
 
     const materials = headTextures.map(e => new THREE.MeshStandardMaterial({ map: e, transparent: true, side: THREE.DoubleSide }))
     const cube = new THREE.Mesh(cubeGeometry, materials)
+    cube.position.set(0, 10, 0)
     return cube;
 }
 
@@ -217,7 +219,7 @@ export function renderRightSleeve(url) {
 
     const materials = bodyTextures.map(e => new THREE.MeshStandardMaterial({ map: e, transparent: true, side: THREE.DoubleSide }))
     const cube = new THREE.Mesh(cubeGeometry, materials)
-    cube.position.set(-6, -10, 0)
+    cube.position.set(-6, 0, 0)
     return cube;
 }
 
@@ -247,7 +249,7 @@ export function renderLeftSleeve(url) {
 
     const materials = bodyTextures.map(e => new THREE.MeshStandardMaterial({ map: e, transparent: true, side: THREE.DoubleSide  }))
     const cube = new THREE.Mesh(cubeGeometry, materials)
-    cube.position.set(6, -10, 0)
+    cube.position.set(6, 0, 0)
     return cube;
 }
 
@@ -277,7 +279,7 @@ export function renderBodySecondLayer(url) {
 
     const materials = bodyTextures.map(e => new THREE.MeshStandardMaterial({ map: e, transparent: true, side: THREE.DoubleSide }))
     const cube = new THREE.Mesh(cubeGeometry, materials)
-    cube.position.set(0, -10, 0)
+    cube.position.set(0, 0, 0)
     return cube;
 }
 
@@ -307,7 +309,37 @@ export function renderLeftLegSleeve(url) {
 
     const materials = bodyTextures.map(e => new THREE.MeshStandardMaterial({ map: e, transparent: true, side: THREE.DoubleSide }))
     const cube = new THREE.Mesh(cubeGeometry, materials)
-    cube.position.set(2, -22, 0)
+    cube.position.set(2, -12, 0)
+    return cube;
+}
+
+export function renderRightLegSleeve(url) {
+    const cubeGeometry = new THREE.BoxGeometry(4.5, 12.5, 4.5);
+
+    var bodyTextures = Array(6).fill().map(() => new THREE.TextureLoader().load(url));
+
+    bodyTextures.forEach(function (e) {
+        e.magFilter = THREE.NearestFilter;
+    })
+
+    bodyTextures[0].offset.set(0.125, 0.25)
+    bodyTextures[0].repeat.set(0.0625, 0.1875);
+    bodyTextures[1].offset.set(0, 0.25)
+    bodyTextures[1].repeat.set(0.0625, 0.1875);
+
+    bodyTextures[2].offset.set(0.0625, 0.4375)
+    bodyTextures[2].repeat.set(0.0625, 0.0625);
+    bodyTextures[3].offset.set(0.125, 0.4375)
+    bodyTextures[3].repeat.set(0.0625, 0.0625);
+
+    bodyTextures[4].offset.set(0.0625, 0.25)
+    bodyTextures[4].repeat.set(0.0625, 0.1875);
+    bodyTextures[5].offset.set(0.1875, 0.25)
+    bodyTextures[5].repeat.set(0.0625, 0.1875);
+
+    const materials = bodyTextures.map(e => new THREE.MeshStandardMaterial({ map: e }))
+    const cube = new THREE.Mesh(cubeGeometry, materials)
+    cube.position.set(-2, -12, 0)
     return cube;
 }
 
@@ -316,7 +348,7 @@ export function addStar() {
     const starMaterial = new THREE.MeshStandardMaterial({ color: 0xffffff });
     const star = new THREE.Mesh(starGeometry, starMaterial);
 
-    const [x, y, z] = Array(3).fill().map(() => THREE.MathUtils.randFloatSpread(100));
+    const [x, y, z] = Array(3).fill().map(() => THREE.MathUtils.randFloatSpread(300));
     star.position.set(x, y, z)
     return star
 }
