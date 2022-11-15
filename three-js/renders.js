@@ -376,7 +376,6 @@ export function renderCape(url) {
     return cube;
 }
 
-
 export function renderLeftArmSlim(url) {
     const cubeGeometry = new THREE.BoxGeometry(3, 12, 4);
 
@@ -404,6 +403,66 @@ export function renderLeftArmSlim(url) {
     const materials = bodyTextures.map(e => new THREE.MeshStandardMaterial({ map: e }))
     const cube = new THREE.Mesh(cubeGeometry, materials)
     cube.position.set(5.5, 0, 0)
+    return cube;
+}
+
+export function renderLeftSleeveSlim(url) {
+    const cubeGeometry = new THREE.BoxGeometry(3.5, 12.5, 4.5);
+
+    var bodyTextures = Array(6).fill().map(() => new THREE.TextureLoader().load(url));
+
+    bodyTextures.forEach(function (e) {
+        e.magFilter = THREE.NearestFilter;
+    })
+
+    bodyTextures[0].offset.set(55/64, 0)
+    bodyTextures[0].repeat.set(1/16,12/64);
+    bodyTextures[1].offset.set(0.75, 0)
+    bodyTextures[1].repeat.set(1/16, 12/64);
+
+    bodyTextures[2].offset.set(52/64, 12/64)
+    bodyTextures[2].repeat.set(3/64, 1/16);
+    bodyTextures[3].offset.set(55/64, 0.1875)
+    bodyTextures[3].repeat.set(3/64, 1/16);
+
+    bodyTextures[4].offset.set(52/64, 0)
+    bodyTextures[4].repeat.set(3/64, 12/64);
+    bodyTextures[5].offset.set(59/64, 0)
+    bodyTextures[5].repeat.set(3/64, 12/64);
+
+    const materials = bodyTextures.map(e => new THREE.MeshStandardMaterial({ map: e, transparent: true, side: THREE.DoubleSide  }))
+    const cube = new THREE.Mesh(cubeGeometry, materials)
+    cube.position.set(5.5, 0, 0)
+    return cube;
+}
+
+export function renderRightArm(url) {
+    const cubeGeometry = new THREE.BoxGeometry(3, 12, 4);
+
+    var bodyTextures = Array(6).fill().map(() => new THREE.TextureLoader().load(url));
+
+    bodyTextures.forEach(function (e) {
+        e.magFilter = THREE.NearestFilter;
+    })
+
+    bodyTextures[0].offset.set(0.75, 0.5)
+    bodyTextures[0].repeat.set(0.0625, 0.1875);
+    bodyTextures[1].offset.set(0.625, 0.5)
+    bodyTextures[1].repeat.set(0.0625, 0.1875);
+
+    bodyTextures[2].offset.set(0.6875, 0.6875)
+    bodyTextures[2].repeat.set(0.0625, 0.0625);
+    bodyTextures[3].offset.set(0.75, 0.6875)
+    bodyTextures[3].repeat.set(0.0625, 0.0625);
+
+    bodyTextures[4].offset.set(0.6875, 0.5)
+    bodyTextures[4].repeat.set(0.0625, 0.1875);
+    bodyTextures[5].offset.set(0.8125, 0.5)
+    bodyTextures[5].repeat.set(0.0625, 0.1875);
+
+    const materials = bodyTextures.map(e => new THREE.MeshStandardMaterial({ map: e }))
+    const cube = new THREE.Mesh(cubeGeometry, materials)
+    cube.position.set(-5.5, 0, 0)
     return cube;
 }
 

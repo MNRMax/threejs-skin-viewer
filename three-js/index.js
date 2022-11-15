@@ -1,7 +1,7 @@
 import "./style.css"
 import * as THREE from "three"
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls'
-import { addStar, renderBody, renderHead, renderHelmet, renderLeftArm, renderLeftLeg, renderRightArm, renderRightLeg, renderRightSleeve, renderLeftSleeve, renderBodySecondLayer, renderLeftLegSleeve, renderRightLegSleeve, renderCape, renderLeftArmSlim } from "./renders.js";
+import { addStar, renderBody, renderHead, renderHelmet, renderLeftArm, renderLeftLeg, renderRightArm, renderRightLeg, renderRightSleeve, renderLeftSleeve, renderBodySecondLayer, renderLeftLegSleeve, renderRightLegSleeve, renderCape, renderLeftArmSlim, renderLeftSleeveSlim } from "./renders.js";
 
 //setup
 const scene = new THREE.Scene();
@@ -25,6 +25,7 @@ async function renderSkin(name) {
     let rawData = get(`https://api.ashcon.app/mojang/v2/user/${name}`)
     let data = JSON.parse(rawData)
     const skin = `https://crafatar.com/skins/${data.uuid}?overlay&default=MHF_SAlex`
+    // const skin = '14f23d2012b6c2e8d10f6cbac8ba2980e5bbb96b.png'
     const capeURL = `https://crafatar.com/capes/${data.uuid}`
     
     scene.clear()
@@ -42,7 +43,7 @@ async function renderSkin(name) {
     const RightLegSleeve = renderRightLegSleeve(skin)
     const helmet = renderHelmet(skin)
     const rightSleeve = renderRightSleeve(skin)
-    const leftSleeve = renderLeftSleeve(skin)
+    const leftSleeve = renderLeftSleeveSlim(skin)
     const cape = renderCape(capeURL)
     scene.add(rightArm, leftArm, rightLeg, head, body, leftLeg, helmet, rightSleeve, leftSleeve, BodySecondLayer, LeftLegSleeve, RightLegSleeve, cape)
 }
