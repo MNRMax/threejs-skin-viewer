@@ -23,10 +23,11 @@ document.querySelector('#submit').addEventListener("click", function() {
 
 renderSkin("MNRMax")
 
-function renderSkin(name) {
+async function renderSkin(name) {
     let rawData = get(`https://api.ashcon.app/mojang/v2/user/${name}`)
     let data = JSON.parse(rawData)
     const skin = `https://crafatar.com/skins/${data.uuid}?overlay&default=MHF_SAlex`
+    // const skin = `skin.png`
     const capeURL = `https://crafatar.com/capes/${data.uuid}?overlay&default=MHF_SAlex`
     
     scene.clear()

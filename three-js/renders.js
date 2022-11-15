@@ -357,7 +357,7 @@ export function renderCape(url) {
     bodyTextures[1].offset.set(0.171875, 0.46875)
     bodyTextures[1].repeat.set(0.015625, 0.5);
 
-    bodyTextures[2].offset.set(0.96875, 0.46875)
+    bodyTextures[2].offset.set(0.96875, 0.015625)
     bodyTextures[2].repeat.set(0.03125, 0.0625);
     bodyTextures[3].offset.set(0.96875, 0.46875)
     bodyTextures[3].repeat.set(0.03125, 0.0625);
