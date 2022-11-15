@@ -357,19 +357,52 @@ export function renderCape(url) {
     bodyTextures[1].offset.set(0.171875, 0.46875)
     bodyTextures[1].repeat.set(0.015625, 0.5);
 
-    bodyTextures[2].offset.set(0.96875, 0.015625)
-    bodyTextures[2].repeat.set(0.03125, 0.0625);
-    bodyTextures[3].offset.set(0.96875, 0.46875)
-    bodyTextures[3].repeat.set(0.03125, 0.0625);
+    bodyTextures[2].offset.set(1/64, 31/32)
+    bodyTextures[2].repeat.set(10/64, 1/32);
+    bodyTextures[3].offset.set(11/64, 31/32)
+    bodyTextures[3].repeat.set(10/64, 1/32);
 
     bodyTextures[4].offset.set(0.015625, 0.46875)
     bodyTextures[4].repeat.set(0.15625, 0.5);
     bodyTextures[5].offset.set(0.1875, 0.46875)
     bodyTextures[5].repeat.set(0.15625, 0.5);
 
+    const materials = bodyTextures.map(e => new THREE.MeshStandardMaterial({ map: e, transparent:true }))
+    const cube = new THREE.Mesh(cubeGeometry, materials)
+    cube.position.set(0, -2, -3.4)
+    cube.rotation.x = Math.PI/18
+    cube.rotation.y = Math.PI
+    return cube;
+}
+
+
+export function renderLeftArmSlim(url) {
+    const cubeGeometry = new THREE.BoxGeometry(3, 12, 4);
+
+    var bodyTextures = Array(6).fill().map(() => new THREE.TextureLoader().load(url));
+
+    bodyTextures.forEach(function (e) {
+        e.magFilter = THREE.NearestFilter;
+    })
+
+    bodyTextures[0].offset.set(39/64, 0)
+    bodyTextures[0].repeat.set(4/64, 12/64);
+    bodyTextures[1].offset.set(0.5, 0)
+    bodyTextures[1].repeat.set(4/64, 12/64);
+
+    bodyTextures[2].offset.set(36/64, 12/64)
+    bodyTextures[2].repeat.set(3/64, 4/64);
+    bodyTextures[3].offset.set(39/64, 12/64)
+    bodyTextures[3].repeat.set(3/64, 4/64);
+
+    bodyTextures[4].offset.set(36/64, 0)
+    bodyTextures[4].repeat.set(3/64, 12/64);
+    bodyTextures[5].offset.set(43/42, 0)
+    bodyTextures[5].repeat.set(3/64, 12/64);
+
     const materials = bodyTextures.map(e => new THREE.MeshStandardMaterial({ map: e }))
     const cube = new THREE.Mesh(cubeGeometry, materials)
-    cube.position.set(-20, 0, 0)
+    cube.position.set(5.5, 0, 0)
     return cube;
 }
 

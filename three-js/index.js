@@ -1,10 +1,9 @@
 import "./style.css"
 import * as THREE from "three"
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls'
-import { addStar, renderBody, renderHead, renderHelmet, renderLeftArm, renderLeftLeg, renderRightArm, renderRightLeg, renderRightSleeve, renderLeftSleeve, renderBodySecondLayer, renderLeftLegSleeve, renderRightLegSleeve, renderCape } from "./renders.js";
+import { addStar, renderBody, renderHead, renderHelmet, renderLeftArm, renderLeftLeg, renderRightArm, renderRightLeg, renderRightSleeve, renderLeftSleeve, renderBodySecondLayer, renderLeftLegSleeve, renderRightLegSleeve, renderCape, renderLeftArmSlim } from "./renders.js";
 
 //setup
-var clock = new THREE.Clock();
 const scene = new THREE.Scene();
 const camera = new THREE.PerspectiveCamera(75, window.innerWidth/window.innerHeight, 0.1, 1000)
 
@@ -17,18 +16,16 @@ renderer.setSize(window.innerWidth, window.innerHeight)
 camera.position.setZ(30);
 
 document.querySelector('#submit').addEventListener("click", function() {
-    console.log('test')
     renderSkin(document.querySelector("#minecraftname").value)
 })
 
-renderSkin("MNRMax")
+renderSkin("andrewdungeons")
 
 async function renderSkin(name) {
     let rawData = get(`https://api.ashcon.app/mojang/v2/user/${name}`)
     let data = JSON.parse(rawData)
     const skin = `https://crafatar.com/skins/${data.uuid}?overlay&default=MHF_SAlex`
-    // const skin = `skin.png`
-    const capeURL = `https://crafatar.com/capes/${data.uuid}?overlay&default=MHF_SAlex`
+    const capeURL = `https://crafatar.com/capes/${data.uuid}`
     
     scene.clear()
     scene.add(new THREE.AmbientLight(0xFFFFFF))
@@ -39,7 +36,7 @@ async function renderSkin(name) {
     const BodySecondLayer = renderBodySecondLayer(skin)
     const rightArm = renderRightArm(skin)
     const rightLeg = renderRightLeg(skin)
-    const leftArm = renderLeftArm(skin)
+    const leftArm = renderLeftArmSlim(skin)
     const leftLeg = renderLeftLeg(skin)
     const LeftLegSleeve = renderLeftLegSleeve(skin)
     const RightLegSleeve = renderRightLegSleeve(skin)
@@ -58,10 +55,24 @@ controls.autoRotateSpeed = 5
 controls.enableDamping = true
 camera.setFocalLength(8)
 
+let clock = new THREE.Clock();
+let delta = 0;
+let interval = 1 / 60;
+var fps = 0;
+
 function animate() {
-    requestAnimationFrame( animate)
-    controls.update()
-    renderer.render(scene, camera);
+    requestAnimationFrame(animate);
+    delta += clock.getDelta();
+    if (delta  > interval) {
+        fps++
+        setTimeout(function() {
+            fps--
+        }, 1000)
+        document.getElementById('fps-counter').innerHTML = fps - 1
+        controls.update()
+        renderer.render(scene, camera);
+        delta = delta % interval;
+    }
 }
 
 const spaceTexture = new THREE.TextureLoader().load('space.jpg')
