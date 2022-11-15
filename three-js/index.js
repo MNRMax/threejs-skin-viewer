@@ -19,7 +19,7 @@ document.querySelector('#submit').addEventListener("click", function() {
     renderSkin(document.querySelector("#minecraftname").value)
 })
 
-renderSkin("andrewdungeons")
+renderSkin("hecr")
 
 async function renderSkin(name) {
     let rawData = get(`https://api.ashcon.app/mojang/v2/user/${name}`)

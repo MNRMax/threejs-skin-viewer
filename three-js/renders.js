@@ -13,6 +13,7 @@ export function renderHead(url) {
     headTextures[1].offset.set(0, 0.75)
     headTextures[2].offset.set(0.125, 0.875)
     headTextures[3].offset.set(0.25, 0.875)
+    headTextures[3].rotation = Math.PI
     headTextures[4].offset.set(0.125, 0.75)
     headTextures[5].offset.set(0.375, 0.75)
 
@@ -397,7 +398,7 @@ export function renderLeftArmSlim(url) {
 
     bodyTextures[4].offset.set(36/64, 0)
     bodyTextures[4].repeat.set(3/64, 12/64);
-    bodyTextures[5].offset.set(43/42, 0)
+    bodyTextures[5].offset.set(43/64, 0)
     bodyTextures[5].repeat.set(3/64, 12/64);
 
     const materials = bodyTextures.map(e => new THREE.MeshStandardMaterial({ map: e }))
