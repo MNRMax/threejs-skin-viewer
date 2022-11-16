@@ -101,7 +101,6 @@ function animate() {
 const spaceTexture = new THREE.TextureLoader().load('space.jpg')
 scene.background = spaceTexture;
 
-Array(800).fill().forEach(function() {scene.add(addStar())})
 animate()
 
 function get(url) {

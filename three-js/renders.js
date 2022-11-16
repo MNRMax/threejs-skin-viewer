@@ -501,7 +501,7 @@ export function addStar() {
     const starMaterial = new THREE.MeshStandardMaterial({ color: 0xffffff });
     const star = new THREE.Mesh(starGeometry, starMaterial);
 
-    const [x, y, z] = Array(3).fill().map(() => THREE.MathUtils.randFloatSpread(300));
+    const [x, y, z] = Array(3).fill().map(() => THREE.MathUtils.randFloatSpread(100));
     star.position.set(x, y, z)
     return star
 }
