@@ -12,8 +12,8 @@ export function renderHead(url) {
     headTextures[0].offset.set(0.25, 0.75)
     headTextures[1].offset.set(0, 0.75)
     headTextures[2].offset.set(0.125, 0.875)
-    headTextures[3].offset.set(0.25, 0.875)
-    headTextures[3].rotation = Math.PI
+    headTextures[3].offset.set(0.375, 1) 
+    headTextures[3].repeat.set(-0.125, -0.125);
     headTextures[4].offset.set(0.125, 0.75)
     headTextures[5].offset.set(0.375, 0.75)
 
@@ -436,7 +436,7 @@ export function renderLeftSleeveSlim(url) {
     return cube;
 }
 
-export function renderRightArm(url) {
+export function renderRightArmSlim(url) {
     const cubeGeometry = new THREE.BoxGeometry(3, 12, 4);
 
     var bodyTextures = Array(6).fill().map(() => new THREE.TextureLoader().load(url));
@@ -445,22 +445,52 @@ export function renderRightArm(url) {
         e.magFilter = THREE.NearestFilter;
     })
 
-    bodyTextures[0].offset.set(0.75, 0.5)
-    bodyTextures[0].repeat.set(0.0625, 0.1875);
-    bodyTextures[1].offset.set(0.625, 0.5)
-    bodyTextures[1].repeat.set(0.0625, 0.1875);
+    bodyTextures[0].offset.set(47/64, 0.5)
+    bodyTextures[0].repeat.set(0.0625, 12/64);
+    bodyTextures[1].offset.set(40/64, 0.5)
+    bodyTextures[1].repeat.set(0.0625, 12/64);
 
-    bodyTextures[2].offset.set(0.6875, 0.6875)
-    bodyTextures[2].repeat.set(0.0625, 0.0625);
-    bodyTextures[3].offset.set(0.75, 0.6875)
-    bodyTextures[3].repeat.set(0.0625, 0.0625);
+    bodyTextures[2].offset.set(44/64, 44/64)
+    bodyTextures[2].repeat.set(3/64, 0.0625);
+    bodyTextures[3].offset.set(47/64, 44/64)
+    bodyTextures[3].repeat.set(3/64, 0.0625);
 
-    bodyTextures[4].offset.set(0.6875, 0.5)
-    bodyTextures[4].repeat.set(0.0625, 0.1875);
-    bodyTextures[5].offset.set(0.8125, 0.5)
-    bodyTextures[5].repeat.set(0.0625, 0.1875);
+    bodyTextures[4].offset.set(44/64, 0.5)
+    bodyTextures[4].repeat.set(3/64, 0.1875);
+    bodyTextures[5].offset.set(51/64, 0.5)
+    bodyTextures[5].repeat.set(3/64, 0.1875);
 
     const materials = bodyTextures.map(e => new THREE.MeshStandardMaterial({ map: e }))
+    const cube = new THREE.Mesh(cubeGeometry, materials)
+    cube.position.set(-5.5, 0, 0)
+    return cube;
+}
+
+export function renderRightSleeveSlim(url) {
+    const cubeGeometry = new THREE.BoxGeometry(3.5, 12.5, 4.5);
+
+    var bodyTextures = Array(6).fill().map(() => new THREE.TextureLoader().load(url));
+
+    bodyTextures.forEach(function (e) {
+        e.magFilter = THREE.NearestFilter;
+    })
+
+    bodyTextures[0].offset.set(47/64, 0.25)
+    bodyTextures[0].repeat.set(0.0625, 12/64);
+    bodyTextures[1].offset.set(40/64, 0.25)
+    bodyTextures[1].repeat.set(0.0625, 12/64);
+
+    bodyTextures[2].offset.set(44/64, 12/64)
+    bodyTextures[2].repeat.set(3/64, 0.0625);
+    bodyTextures[3].offset.set(47/64, 12/64)
+    bodyTextures[3].repeat.set(3/64, 0.0625);
+
+    bodyTextures[4].offset.set(44/64, 0.25)
+    bodyTextures[4].repeat.set(3/64, 0.1875);
+    bodyTextures[5].offset.set(51/64, 0.25)
+    bodyTextures[5].repeat.set(3/64, 0.1875);
+
+    const materials = bodyTextures.map(e => new THREE.MeshStandardMaterial({ map: e, transparent:true, side: THREE.DoubleSide }))
     const cube = new THREE.Mesh(cubeGeometry, materials)
     cube.position.set(-5.5, 0, 0)
     return cube;

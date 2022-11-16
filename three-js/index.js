@@ -1,7 +1,7 @@
 import "./style.css"
 import * as THREE from "three"
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls'
-import { addStar, renderBody, renderHead, renderHelmet, renderLeftArm, renderLeftLeg, renderRightArm, renderRightLeg, renderRightSleeve, renderLeftSleeve, renderBodySecondLayer, renderLeftLegSleeve, renderRightLegSleeve, renderCape, renderLeftArmSlim, renderLeftSleeveSlim } from "./renders.js";
+import { addStar, renderBody, renderHead, renderHelmet, renderLeftArm, renderLeftLeg, renderRightArm, renderRightLeg, renderRightSleeve, renderLeftSleeve, renderBodySecondLayer, renderLeftLegSleeve, renderRightLegSleeve, renderCape, renderLeftArmSlim, renderLeftSleeveSlim, renderRightArmSlim, renderRightSleeveSlim } from "./renders.js";
 
 //setup
 const scene = new THREE.Scene();
@@ -15,37 +15,59 @@ renderer.setPixelRatio(window.devicePixelRatio)
 renderer.setSize(window.innerWidth, window.innerHeight)
 camera.position.setZ(30);
 
-document.querySelector('#submit').addEventListener("click", function() {
+document.getElementById("form").addEventListener("submit", function() {
+    event.preventDefault();
     renderSkin(document.querySelector("#minecraftname").value)
-})
+});
 
-renderSkin("hecr")
+renderSkin("MNRMax")
 
 async function renderSkin(name) {
     let rawData = get(`https://api.ashcon.app/mojang/v2/user/${name}`)
     let data = JSON.parse(rawData)
     const skin = `https://crafatar.com/skins/${data.uuid}?overlay&default=MHF_SAlex`
-    // const skin = '14f23d2012b6c2e8d10f6cbac8ba2980e5bbb96b.png'
     const capeURL = `https://crafatar.com/capes/${data.uuid}`
-    
-    scene.clear()
-    scene.add(new THREE.AmbientLight(0xFFFFFF))
-    Array(200).fill().forEach(function() {scene.add(addStar())})
-    
-    const head = renderHead(skin)
-    const body = renderBody(skin)
-    const BodySecondLayer = renderBodySecondLayer(skin)
-    const rightArm = renderRightArm(skin)
-    const rightLeg = renderRightLeg(skin)
-    const leftArm = renderLeftArmSlim(skin)
-    const leftLeg = renderLeftLeg(skin)
-    const LeftLegSleeve = renderLeftLegSleeve(skin)
-    const RightLegSleeve = renderRightLegSleeve(skin)
-    const helmet = renderHelmet(skin)
-    const rightSleeve = renderRightSleeve(skin)
-    const leftSleeve = renderLeftSleeveSlim(skin)
-    const cape = renderCape(capeURL)
-    scene.add(rightArm, leftArm, rightLeg, head, body, leftLeg, helmet, rightSleeve, leftSleeve, BodySecondLayer, LeftLegSleeve, RightLegSleeve, cape)
+
+    var img = new Image();
+    await img.setAttribute("src", `https://crafatar.com/skins/${data.uuid}?overlay&default=MHF_SAlex`)
+    img.crossOrigin = "Anonymous";
+
+    img.onload = function() {
+        let canvas = document.createElement("canvas")
+        canvas.width = 64;
+        canvas.height = 64;
+        canvas.getContext('2d').drawImage(img, 0, 0, img.width, img.height);
+        var pixelData = canvas.getContext('2d').getImageData(51, 16, 1, 1).data;
+        
+        var rightArm = renderRightArm(skin)
+        var leftArm = renderLeftArm(skin)
+        var rightSleeve = renderRightSleeve(skin)
+        var leftSleeve = renderLeftSleeve(skin)
+        
+        if (pixelData[3] == 0) {
+            rightArm = renderRightArmSlim(skin)
+            leftArm = renderLeftArmSlim(skin)
+            rightSleeve = renderRightSleeveSlim(skin)
+            leftSleeve = renderLeftSleeveSlim(skin)
+        }
+        
+        scene.clear()
+        scene.add(new THREE.AmbientLight(0xFFFFFF))
+        Array(200).fill().forEach(function() {scene.add(addStar())})
+        
+        const head = renderHead(skin)
+        const body = renderBody(skin)
+        const BodySecondLayer = renderBodySecondLayer(skin)
+        const rightLeg = renderRightLeg(skin)
+        const leftLeg = renderLeftLeg(skin)
+        const RightLegSleeve = renderRightLegSleeve(skin)
+        const LeftLegSleeve = renderLeftLegSleeve(skin)
+        const helmet = renderHelmet(skin)
+        const cape = renderCape(capeURL)
+        scene.add(rightArm, leftArm, rightLeg, head, body, leftLeg, helmet, leftSleeve, rightSleeve, BodySecondLayer, LeftLegSleeve, RightLegSleeve, cape)
+        // scene.add(head)
+    };
+
 }
 
 const controls = new OrbitControls(camera, renderer.domElement);
