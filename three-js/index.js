@@ -29,7 +29,7 @@ async function renderSkin(name) {
     const capeURL = `https://crafatar.com/capes/${data.uuid}`
 
     var img = new Image();
-    await img.setAttribute("src", `https://crafatar.com/skins/${data.uuid}?overlay&default=MHF_SAlex`)
+    img.setAttribute("src", `https://crafatar.com/skins/${data.uuid}?overlay&default=MHF_SAlex`)
     img.crossOrigin = "Anonymous";
 
     img.onload = function() {
