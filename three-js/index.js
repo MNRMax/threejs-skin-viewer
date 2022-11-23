@@ -27,52 +27,39 @@ async function renderSkin(name) {
     let data = JSON.parse(rawData)
     const skin = `https://crafatar.com/skins/${data.uuid}?overlay&default=MHF_SAlex`
     const capeURL = `https://crafatar.com/capes/${data.uuid}`
-
-    var img = new Image();
-    img.setAttribute("src", `https://crafatar.com/skins/${data.uuid}?overlay&default=MHF_SAlex`)
-    img.crossOrigin = "Anonymous";
-
-    img.onload = function() {
-        let canvas = document.createElement("canvas")
-        canvas.width = 64;
-        canvas.height = 64;
-        canvas.getContext('2d').drawImage(img, 0, 0, img.width, img.height);
-        var pixelData = canvas.getContext('2d').getImageData(51, 16, 1, 1).data;
-        
-        var rightArm = renderRightArm(skin)
-        var leftArm = renderLeftArm(skin)
-        var rightSleeve = renderRightSleeve(skin)
-        var leftSleeve = renderLeftSleeve(skin)
-        
-        if (pixelData[3] == 0) {
-            rightArm = renderRightArmSlim(skin)
-            leftArm = renderLeftArmSlim(skin)
-            rightSleeve = renderRightSleeveSlim(skin)
-            leftSleeve = renderLeftSleeveSlim(skin)
-        }
-        
-        scene.clear()
-        scene.add(new THREE.AmbientLight(0xFFFFFF))
-        Array(200).fill().forEach(function() {scene.add(addStar())})
-        
-        const head = renderHead(skin)
-        const body = renderBody(skin)
-        const BodySecondLayer = renderBodySecondLayer(skin)
-        const rightLeg = renderRightLeg(skin)
-        const leftLeg = renderLeftLeg(skin)
-        const RightLegSleeve = renderRightLegSleeve(skin)
-        const LeftLegSleeve = renderLeftLegSleeve(skin)
-        const helmet = renderHelmet(skin)
-        const cape = renderCape(capeURL)
-        scene.add(rightArm, leftArm, rightLeg, head, body, leftLeg, helmet, leftSleeve, rightSleeve, BodySecondLayer, LeftLegSleeve, RightLegSleeve, cape)
-        // scene.add(head)
-    };
-
+    
+    var rightArm = renderRightArm(skin)
+    var leftArm = renderLeftArm(skin)
+    var rightSleeve = renderRightSleeve(skin)
+    var leftSleeve = renderLeftSleeve(skin)
+    
+    if (data.textures.slim === true) {
+        rightArm = renderRightArmSlim(skin)
+        leftArm = renderLeftArmSlim(skin)
+        rightSleeve = renderRightSleeveSlim(skin)
+        leftSleeve = renderLeftSleeveSlim(skin)
+    }
+    
+    scene.clear()
+    scene.add(new THREE.AmbientLight(0xFFFFFF))
+    Array(200).fill().forEach(function() {scene.add(addStar())})
+    
+    const head = renderHead(skin)
+    const body = renderBody(skin)
+    const BodySecondLayer = renderBodySecondLayer(skin)
+    const rightLeg = renderRightLeg(skin)
+    const leftLeg = renderLeftLeg(skin)
+    const RightLegSleeve = renderRightLegSleeve(skin)
+    const LeftLegSleeve = renderLeftLegSleeve(skin)
+    const helmet = renderHelmet(skin)
+    const cape = renderCape(capeURL)
+    scene.add(rightArm, leftArm, rightLeg, head, body, leftLeg, helmet, leftSleeve, rightSleeve, BodySecondLayer, LeftLegSleeve, RightLegSleeve, cape)
+    // scene.add(head)
 }
 
 const controls = new OrbitControls(camera, renderer.domElement);
 // controls.enableZoom = false;
-// controls.enablePan = false;
+controls.enablePan = false;
 controls.autoRotate = true
 controls.autoRotateSpeed = 5
 controls.enableDamping = true
