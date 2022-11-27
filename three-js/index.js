@@ -33,7 +33,7 @@ async function renderSkin(name) {
     var rightSleeve = renderRightSleeve(skin)
     var leftSleeve = renderLeftSleeve(skin)
     
-    if (data.textures.slim === true) {
+    if (data.textures.slim == true) {
         rightArm = renderRightArmSlim(skin)
         leftArm = renderLeftArmSlim(skin)
         rightSleeve = renderRightSleeveSlim(skin)
