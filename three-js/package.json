@@ -12,6 +12,7 @@
     "vite": "^3.2.3"
   },
   "dependencies": {
+    "node-fetch": "^2.6.7",
     "three": "^0.146.0",
     "three-js": "^79.0.0",
     "xmlhttprequest": "^1.8.0"

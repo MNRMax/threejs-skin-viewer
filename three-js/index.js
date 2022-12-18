@@ -20,41 +20,64 @@ document.getElementById("form").addEventListener("submit", function() {
     renderSkin(document.querySelector("#minecraftname").value)
 });
 
-renderSkin("MNRMax")
+renderSkin("MNRMaxdgfdgfdgdgfdgfdgfd")
 
 async function renderSkin(name) {
-    let rawData = get(`https://api.ashcon.app/mojang/v2/user/${name}`)
-    let data = JSON.parse(rawData)
-    const skin = `https://crafatar.com/skins/${data.uuid}?overlay&default=MHF_SAlex`
-    const capeURL = `https://crafatar.com/capes/${data.uuid}`
-    
-    var rightArm = renderRightArm(skin)
-    var leftArm = renderLeftArm(skin)
-    var rightSleeve = renderRightSleeve(skin)
-    var leftSleeve = renderLeftSleeve(skin)
-    
-    if (data.textures.slim == true) {
-        rightArm = renderRightArmSlim(skin)
-        leftArm = renderLeftArmSlim(skin)
-        rightSleeve = renderRightSleeveSlim(skin)
-        leftSleeve = renderLeftSleeveSlim(skin)
+    let data;
+
+    try {
+        const response = await fetch(`https://api.ashcon.app/mojang/v2/user/${name}`);  
+        data = await response.json();
+    } catch (error) {
+        return
     }
-    
-    scene.clear()
-    scene.add(new THREE.AmbientLight(0xFFFFFF))
-    Array(200).fill().forEach(function() {scene.add(addStar())})
-    
-    const head = renderHead(skin)
-    const body = renderBody(skin)
-    const BodySecondLayer = renderBodySecondLayer(skin)
-    const rightLeg = renderRightLeg(skin)
-    const leftLeg = renderLeftLeg(skin)
-    const RightLegSleeve = renderRightLegSleeve(skin)
-    const LeftLegSleeve = renderLeftLegSleeve(skin)
-    const helmet = renderHelmet(skin)
-    const cape = renderCape(capeURL)
-    scene.add(rightArm, leftArm, rightLeg, head, body, leftLeg, helmet, leftSleeve, rightSleeve, BodySecondLayer, LeftLegSleeve, RightLegSleeve, cape)
-    // scene.add(head)
+
+    const skin = `https://crafatar.com/skins/${data.uuid}?overlay`
+    const capeURL = `https://crafatar.com/capes/${data.uuid}`
+
+    var img = new Image();
+    img.setAttribute("src", `https://crafatar.com/skins/${data.uuid}?overlay`)
+    img.crossOrigin = "Anonymous";
+
+    img.onload = function() {
+        let canvas = document.createElement("canvas")
+        canvas.width = 64;
+        canvas.height = 64;
+        canvas.getContext('2d').drawImage(img, 0, 0, img.width, img.height);
+        var pixelData = canvas.getContext('2d').getImageData(51, 16, 1, 1).data;
+
+        var rightArm = renderRightArm(skin)
+        var leftArm = renderLeftArm(skin)
+        var rightSleeve = renderRightSleeve(skin)
+        var leftSleeve = renderLeftSleeve(skin)
+
+        if (pixelData[3] == 0) {
+            rightArm = renderRightArmSlim(skin)
+            leftArm = renderLeftArmSlim(skin)
+            rightSleeve = renderRightSleeveSlim(skin)
+            leftSleeve = renderLeftSleeveSlim(skin)
+        }
+
+        scene.clear()
+        scene.add(new THREE.AmbientLight(0xFFFFFF))
+        Array(200).fill().forEach(function() {scene.add(addStar())})
+
+        const head = renderHead(skin)
+        const body = renderBody(skin)
+        const BodySecondLayer = renderBodySecondLayer(skin)
+        const rightLeg = renderRightLeg(skin)
+        const leftLeg = renderLeftLeg(skin)
+        const RightLegSleeve = renderRightLegSleeve(skin)
+        const LeftLegSleeve = renderLeftLegSleeve(skin)
+        const helmet = renderHelmet(skin)
+
+        if (checkCape(data.uuid)) {
+            const cape = renderCape(capeURL)
+            scene.add(cape)
+        }
+
+        scene.add(rightArm, leftArm, rightLeg, head, body, leftLeg, helmet, leftSleeve, rightSleeve, BodySecondLayer, LeftLegSleeve, RightLegSleeve)
+    }
 }
 
 const controls = new OrbitControls(camera, renderer.domElement);
@@ -69,6 +92,11 @@ let clock = new THREE.Clock();
 let delta = 0;
 let interval = 1 / 60;
 var fps = 0;
+
+const spaceTexture = new THREE.TextureLoader().load('space.jpg')
+scene.background = spaceTexture;
+
+animate()
 
 function animate() {
     requestAnimationFrame(animate);
@@ -85,14 +113,10 @@ function animate() {
     }
 }
 
-const spaceTexture = new THREE.TextureLoader().load('space.jpg')
-scene.background = spaceTexture;
-
-animate()
-
-function get(url) {
-    var xmlHttp = new XMLHttpRequest();
-    xmlHttp.open("GET", url, false);
-    xmlHttp.send(null);
-    return xmlHttp.responseText;
+async function checkCape(uuid) {
+    const response = await fetch(`https://crafatar.com/capes/${uuid}`)
+    if (response.ok) {
+        return true
+    }
+    return false
 }
