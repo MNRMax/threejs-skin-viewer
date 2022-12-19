@@ -184,7 +184,8 @@ export function renderHelmet(url) {
     headTextures[0].offset.set(0.75, 0.75)
     headTextures[1].offset.set(0.5, 0.75)
     headTextures[2].offset.set(0.625, 0.875)
-    headTextures[3].offset.set(0.75, 0.875)
+    headTextures[3].offset.set(0.875, 1)
+    headTextures[3].repeat.set(-0.125, -0.125);
     headTextures[4].offset.set(0.625, 0.75)
     headTextures[5].offset.set(0.875, 0.75)
 
