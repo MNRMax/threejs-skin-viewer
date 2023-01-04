@@ -20,7 +20,7 @@ document.getElementById("form").addEventListener("submit", function() {
     renderSkin(document.querySelector("#minecraftname").value)
 });
 
-renderSkin("MNRMaxdgfdgfdgdgfdgfdgfd")
+renderSkin("MNRMax")
 
 async function renderSkin(name) {
     let data;
@@ -34,7 +34,7 @@ async function renderSkin(name) {
 
     const skin = `https://crafatar.com/skins/${data.uuid}?overlay`
     const capeURL = `https://crafatar.com/capes/${data.uuid}`
-
+    getFriends(data.uuid)
     var img = new Image();
     img.setAttribute("src", `https://crafatar.com/skins/${data.uuid}?overlay`)
     img.crossOrigin = "Anonymous";
@@ -119,4 +119,28 @@ async function checkCape(uuid) {
         return true
     }
     return false
+}
+async function getFriends(uuid) {
+    let key = '288ad2f5-c93f-47c4-9087-15816507d776';
+    try {
+        let friends = [];
+        const res = await fetch(`https://api.hypixel.net/friends?key=${key}&uuid=${uuid}`)
+        if (res.status != 200) {
+            throw("Something is worng.")
+        }
+        const data = await res.json();
+        data.records.forEach(async record => {
+            if(record.uuidReceiver == uuid.replaceAll('-', '')) {
+                let name = await fetch(`https://api.mojang.com/user/profiles/${record.uuidSender}/names`)
+                friends.push(name)
+            }
+            else {
+                friends.push(record.uuidReceiver)
+            }
+        })
+        console.log(friends)
+    }
+    catch (e) {
+        console.log(e)
+    }
 }
