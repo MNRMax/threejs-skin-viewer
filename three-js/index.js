@@ -2,6 +2,7 @@ import "./style.css"
 import * as THREE from "three"
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls'
 import { addStar, renderBody, renderHead, renderHelmet, renderLeftArm, renderLeftLeg, renderRightArm, renderRightLeg, renderRightSleeve, renderLeftSleeve, renderBodySecondLayer, renderLeftLegSleeve, renderRightLegSleeve, renderCape, renderLeftArmSlim, renderLeftSleeveSlim, renderRightArmSlim, renderRightSleeveSlim } from "./renders.js";
+import { DataArrayTexture } from "three";
 
 //setup
 const scene = new THREE.Scene();
@@ -34,7 +35,7 @@ async function renderSkin(name) {
 
     const skin = `https://crafatar.com/skins/${data.uuid}?overlay`
     const capeURL = `https://crafatar.com/capes/${data.uuid}`
-    getFriends(data.uuid)
+    getHypixelProfile(data.uuid)
     var img = new Image();
     img.setAttribute("src", `https://crafatar.com/skins/${data.uuid}?overlay`)
     img.crossOrigin = "Anonymous";
@@ -143,4 +144,11 @@ async function getFriends(uuid) {
     catch (e) {
         console.log(e)
     }
+}
+
+async function getHypixelProfile(uuid) {
+    let key = '288ad2f5-c93f-47c4-9087-15816507d776';
+    const res = await fetch(`https://api.hypixel.net/player?uuid=${uuid.replaceAll('-', '')}&key=${key}`)
+    const data = await res.json()
+    console.log(data.player.stats.Bedwars)
 }

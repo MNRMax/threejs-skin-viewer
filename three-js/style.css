@@ -1,15 +1,57 @@
 #canvas {
-    z-index: -1;
-    position: fixed;
-    top: 0;
-    left: 0;
+  z-index: -1;
+  position: fixed;
+  top: 0;
+  left: 0;
 }
 
 #fps-counter {
-    position: absolute;
-    top: 0;
-    right: 0;
+  position: absolute;
+  top: 0;
+  right: 0;
+  margin: 0;
+  padding: 0;
+  color: lime;
+}
+
+.bedwars-dropdown {
+  padding: 0 18px;
+  background-color: white;
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.2s ease-out;
+  width: 85%;
+}
+
+.stat-dropdowns {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  width: 20%;
+}
+.collapsible {
+  background-color: #eee;
+  color: #444;
+  cursor: pointer;
+  padding: 18px;
+  width: 85%;
+  border: none;
+  text-align: left;
+  outline: none;
+  font-size: 15px;
+  display: flex;
+  justify-content: space-around;
+}
+.dropdown-text {
+    width: 100%;
     margin: 0;
-    padding: 0;
-    color: lime;
+    font-size: 1.2rem;
+    vertical-align: middle;
+}
+.dropdown-icon {
+    position: relative;
+    height: 1rem;
+    vertical-align: middle;
+    transition: 0.25s;
+    transform: rotate(-90deg);
 }
