@@ -12,6 +12,7 @@
   margin: 0;
   padding: 0;
   color: lime;
+  display: none;
 }
 
 .bedwars-dropdown {
@@ -29,6 +30,7 @@
   right: 1rem;
   width: 20%;
 }
+
 .collapsible {
   background-color: #eee;
   color: #444;
@@ -42,16 +44,18 @@
   display: flex;
   justify-content: space-around;
 }
+
 .dropdown-text {
-    width: 100%;
-    margin: 0;
-    font-size: 1.2rem;
-    vertical-align: middle;
+  width: 100%;
+  margin: 0;
+  font-size: 1.2rem;
+  vertical-align: middle;
 }
+
 .dropdown-icon {
-    position: relative;
-    height: 1rem;
-    vertical-align: middle;
-    transition: 0.25s;
-    transform: rotate(-90deg);
+  position: relative;
+  height: 1rem;
+  vertical-align: middle;
+  transition: 0.25s;
+  transform: rotate(-90deg);
 }

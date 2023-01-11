@@ -16,6 +16,13 @@ renderer.setPixelRatio(window.devicePixelRatio)
 renderer.setSize(window.innerWidth, window.innerHeight)
 camera.position.setZ(30);
 
+addEventListener("resize", (event) => {
+    renderer.setPixelRatio(window.devicePixelRatio)
+    renderer.setSize(window.innerWidth, window.innerHeight)
+    camera.aspect = window.innerWidth/window.innerHeight
+    camera.updateProjectionMatrix();
+});
+
 document.getElementById("form").addEventListener("submit", function() {
     event.preventDefault();
     renderSkin(document.querySelector("#minecraftname").value)
