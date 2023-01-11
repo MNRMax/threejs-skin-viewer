@@ -15,13 +15,14 @@
   display: none;
 }
 
-.bedwars-dropdown {
+.dropdown {
   padding: 0 18px;
   background-color: white;
   max-height: 0;
   overflow: hidden;
   transition: max-height 0.2s ease-out;
   width: 85%;
+  display: block;
 }
 
 .stat-dropdowns {

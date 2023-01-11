@@ -43,6 +43,7 @@ async function renderSkin(name) {
     const skin = `https://crafatar.com/skins/${data.uuid}?overlay`
     const capeURL = `https://crafatar.com/capes/${data.uuid}`
     getHypixelProfile(data.uuid)
+    displayBWStats(data.uuid) 
     var img = new Image();
     img.setAttribute("src", `https://crafatar.com/skins/${data.uuid}?overlay`)
     img.crossOrigin = "Anonymous";
@@ -158,4 +159,27 @@ async function getHypixelProfile(uuid) {
     const res = await fetch(`https://api.hypixel.net/player?uuid=${uuid.replaceAll('-', '')}&key=${key}`)
     const data = await res.json()
     console.log(data.player.stats.Bedwars)
+}
+
+async function displayBWStats(uuid) {
+    let key = '288ad2f5-c93f-47c4-9087-15816507d776';
+    const statsBox = document.querySelector("#bedwars-dropdown") 
+
+    const res = await fetch(`https://api.hypixel.net/player?uuid=${uuid.replaceAll('-', '')}&key=${key}`)
+    const data = await res.json()
+    const stats = data.player.stats.Bedwars
+    statsBox.innerHTML = ''
+    console.log(stats)
+    statsBox.insertAdjacentHTML("beforeend", 
+    `<p>Kills: ${stats.kills_bedwars}</p>
+    <p>Deaths: ${stats.deaths_bedwars}</p>
+    <p>K/D: ${round(stats.kills_bedwars/stats.deaths_bedwars)}</p>
+    <p>Wins: ${stats.wins_bedwars}\n</p>
+    <p>Loses: ${stats.losses_bedwars}\n</p>
+    <p>W/L: ${round(stats.wins_bedwars/stats.losses_bedwars)}</p>
+    `)
+}
+
+function round(number) {
+    return Math.round(100*number)/100;
 }
