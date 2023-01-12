@@ -543,7 +543,7 @@ export function renderIGN(rank, monthlyRank, ign) {
     nameTag.text = (`${rank} ${ign}`).trim()
     nameTag.fontSize = 2
     nameTag.color = color
-    nameTag.position.set(0, 20, 0)
+    nameTag.position.set(0, 18, 0)
     nameTag.anchorX = "center"
     nameTag.font = "Minecraftia-Regular.ttf"
 
@@ -554,6 +554,6 @@ export function renderIGNBG() {
     const nameTagGeometry = new THREE.PlaneGeometry(10, 2);
     const nameTagMaterial = new THREE.MeshStandardMaterial({ color: 0xffffff, transparent:true, side: THREE.DoubleSide});
     const nameTag = new THREE.Mesh(nameTagGeometry, nameTagMaterial);
-    nameTag.position.set(0, 20, 0)
+    nameTag.position.set(0, 16, 0)
     return nameTag
 }

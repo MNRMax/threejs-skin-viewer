@@ -45,6 +45,10 @@ async function renderSkin(name) {
     let hypixelData = await getHypixelProfile(data.uuid)
     displayBWStats(hypixelData) 
     displaySWStats(hypixelData)
+    displayClassicStats(hypixelData)
+    displaySumoStats(hypixelData)
+    // displayBridgeStats(hypixelData)
+    // displayUHCStats(hypixelData)
     var img = new Image();
     img.setAttribute("src", `https://crafatar.com/skins/${data.uuid}?overlay`)
     img.crossOrigin = "Anonymous";
@@ -93,7 +97,7 @@ async function renderSkin(name) {
 }
 
 const controls = new OrbitControls(camera, renderer.domElement);
-// controls.enableZoom = false;
+controls.enableZoom = false;
 controls.enablePan = false;
 controls.autoRotate = true
 controls.autoRotateSpeed = 5
@@ -197,6 +201,57 @@ async function displaySWStats(data) {
     <p>Wins: ${stats.wins}\n</p>
     <p>Loses: ${stats.losses}\n</p>
     <p>W/L: ${round(stats.wins/stats.losses)}</p>
+    `)
+}
+
+async function displayClassicStats(data) {
+    const stats = data.player.stats.Duels
+    const statsBox = document.querySelector("#classic-dropdown") 
+
+    statsBox.innerHTML = ''
+    statsBox.insertAdjacentHTML("beforeend", 
+    `<p>Kills: ${stats.classic_duel_kills}</p>
+    <p>Wins: ${stats.classic_duel_wins}\n</p>
+    <p>Loses: ${stats.classic_duel_losses}\n</p>
+    <p>W/L: ${round(stats.classic_duel_wins/stats.classic_duel_losses)}</p>
+    `)
+}
+async function displaySumoStats(data) {
+    const stats = data.player.stats.Duels
+    const statsBox = document.querySelector("#sumo-dropdown") 
+
+    statsBox.innerHTML = ''
+    statsBox.insertAdjacentHTML("beforeend", 
+    `<p>Kills: ${stats.sumo_duel_kills}</p>
+    <p>Wins: ${stats.sumo_duel_wins}\n</p>
+    <p>Loses: ${stats.sumo_duel_losses}\n</p>
+    <p>W/L: ${round(stats.sumo_duel_wins/stats.sumo_duel_losses)}</p>
+    `)
+}
+async function displayBridgeStats(data) {
+    const stats = data.player.stats.Duels
+    const statsBox = document.querySelector("#bridge-dropdown") 
+
+    statsBox.innerHTML = ''
+    statsBox.insertAdjacentHTML("beforeend", 
+    `<p>Kills: ${stats.bridge_kills}</p>
+    <p>Deaths: ${stats.bridge_deaths}</p>
+    <p>K/D: ${round(stats.bridge_kills/stats.bridge_deaths)}</p>
+    <p>Wins: ${data.player.achievments.duels_bridge_losses}\n</p>
+    <p>Loses: ${stats.losses}\n</p>
+    <p>W/L: ${round(stats.wins/stats.losses)}</p>
+    `)
+}
+async function displayUHCStats(data) {
+    const stats = data.player.stats.Duels
+    const statsBox = document.querySelector("#uhc-dropdown") 
+
+    statsBox.innerHTML = ''
+    statsBox.insertAdjacentHTML("beforeend", 
+    `<p>Kills: ${stats.uhc_duel_kills}</p>
+    <p>Wins: ${stats.uhc_duel_wins}\n</p>
+    <p>Loses: ${stats.classic_duel_losses}\n</p>
+    <p>W/L: ${round(stats.classic_duel_wins/stats.classic_duel_losses)}</p>
     `)
 }
 

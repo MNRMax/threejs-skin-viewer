@@ -75,3 +75,6 @@ body {
   transition: 0.25s;
   transform: rotate(-90deg);
 }
+#form {
+    position: fixed;
+}
