@@ -1,7 +1,7 @@
 import "./style.css"
 import * as THREE from "three"
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls'
-import { addStar, renderBody, renderHead, renderHelmet, renderLeftArm, renderLeftLeg, renderRightArm, renderRightLeg, renderRightSleeve, renderLeftSleeve, renderBodySecondLayer, renderLeftLegSleeve, renderRightLegSleeve, renderCape, renderLeftArmSlim, renderLeftSleeveSlim, renderRightArmSlim, renderRightSleeveSlim } from "./renders.js";
+import { addStar, renderBody, renderHead, renderHelmet, renderLeftArm, renderLeftLeg, renderRightArm, renderRightLeg, renderRightSleeve, renderLeftSleeve, renderBodySecondLayer, renderLeftLegSleeve, renderRightLegSleeve, renderCape, renderLeftArmSlim, renderLeftSleeveSlim, renderRightArmSlim, renderRightSleeveSlim, renderIGN } from "./renders.js";
 import { DataArrayTexture } from "three";
 
 //setup
@@ -42,8 +42,9 @@ async function renderSkin(name) {
 
     const skin = `https://crafatar.com/skins/${data.uuid}?overlay`
     const capeURL = `https://crafatar.com/capes/${data.uuid}`
-    getHypixelProfile(data.uuid)
-    displayBWStats(data.uuid) 
+    let hypixelData = await getHypixelProfile(data.uuid)
+    displayBWStats(hypixelData) 
+    displaySWStats(hypixelData)
     var img = new Image();
     img.setAttribute("src", `https://crafatar.com/skins/${data.uuid}?overlay`)
     img.crossOrigin = "Anonymous";
@@ -79,13 +80,15 @@ async function renderSkin(name) {
         const RightLegSleeve = renderRightLegSleeve(skin)
         const LeftLegSleeve = renderLeftLegSleeve(skin)
         const helmet = renderHelmet(skin)
+        console.log(hypixelData.player.newPackageRank)
+        const nameTag = renderIGN(hypixelData.player.newPackageRank, hypixelData.player.monthlyPackageRank, hypixelData.player.displayname)
 
         if (checkCape(data.uuid)) {
             const cape = renderCape(capeURL)
             scene.add(cape)
         }
 
-        scene.add(rightArm, leftArm, rightLeg, head, body, leftLeg, helmet, leftSleeve, rightSleeve, BodySecondLayer, LeftLegSleeve, RightLegSleeve)
+        scene.add(rightArm, leftArm, rightLeg, head, body, leftLeg, helmet, leftSleeve, rightSleeve, BodySecondLayer, LeftLegSleeve, RightLegSleeve, nameTag)
     }
 }
 
@@ -158,25 +161,42 @@ async function getHypixelProfile(uuid) {
     let key = '288ad2f5-c93f-47c4-9087-15816507d776';
     const res = await fetch(`https://api.hypixel.net/player?uuid=${uuid.replaceAll('-', '')}&key=${key}`)
     const data = await res.json()
-    console.log(data.player.stats.Bedwars)
+    return data
 }
 
-async function displayBWStats(uuid) {
-    let key = '288ad2f5-c93f-47c4-9087-15816507d776';
+async function displayBWStats(data) {
+    const stats = data.player.stats.Bedwars
     const statsBox = document.querySelector("#bedwars-dropdown") 
 
-    const res = await fetch(`https://api.hypixel.net/player?uuid=${uuid.replaceAll('-', '')}&key=${key}`)
-    const data = await res.json()
-    const stats = data.player.stats.Bedwars
     statsBox.innerHTML = ''
-    console.log(stats)
     statsBox.insertAdjacentHTML("beforeend", 
     `<p>Kills: ${stats.kills_bedwars}</p>
     <p>Deaths: ${stats.deaths_bedwars}</p>
     <p>K/D: ${round(stats.kills_bedwars/stats.deaths_bedwars)}</p>
+    <p>Final Kills: ${stats.final_kills_bedwars}</p>
+    <p>Final Deaths: ${stats.final_deaths_bedwars}</p>
+    <p>FK/D: ${round(stats.final_kills_bedwars/stats.final_deaths_bedwars)}</p>
+    <p>Beds Broken: ${stats.beds_broken_bedwars}</p>
+    <p>Beds Lost: ${stats.beds_lost_bedwars}</p>
+    <p>BB/L: ${round(stats.beds_broken_bedwars/stats.beds_lost_bedwars)}</p>
     <p>Wins: ${stats.wins_bedwars}\n</p>
     <p>Loses: ${stats.losses_bedwars}\n</p>
     <p>W/L: ${round(stats.wins_bedwars/stats.losses_bedwars)}</p>
+    `)
+}
+
+async function displaySWStats(data) {
+    const stats = data.player.stats.SkyWars
+    const statsBox = document.querySelector("#skywars-dropdown") 
+
+    statsBox.innerHTML = ''
+    statsBox.insertAdjacentHTML("beforeend", 
+    `<p>Kills: ${stats.kills}</p>
+    <p>Deaths: ${stats.deaths}</p>
+    <p>K/D: ${round(stats.kills/stats.deaths)}</p>
+    <p>Wins: ${stats.wins}\n</p>
+    <p>Loses: ${stats.losses}\n</p>
+    <p>W/L: ${round(stats.wins/stats.losses)}</p>
     `)
 }
 

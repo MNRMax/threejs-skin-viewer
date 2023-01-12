@@ -1,4 +1,5 @@
 import * as THREE from "three"
+import {Text} from 'troika-three-text'
 
 export function renderHead(url) {
     const cubeGeometry = new THREE.BoxGeometry(8, 8, 8);
@@ -505,4 +506,54 @@ export function addStar() {
     const [x, y, z] = Array(3).fill().map(() => THREE.MathUtils.randFloatSpread(100));
     star.position.set(x, y, z)
     return star
+}
+
+export function renderIGN(rank, monthlyRank, ign) {
+    // const nameTagGeometry = new THREE.PlaneGeometry(10, 2);
+    // const nameTagMaterial = new THREE.MeshStandardMaterial({ color: 0xffffff, transparent:true, side: THREE.DoubleSide});
+    // const nameTag = new THREE.Mesh(nameTagGeometry, nameTagMaterial);
+    let color = 0xFFFFFF
+    
+    if (rank == undefined) {
+        rank = ""
+    }
+    if (rank == "VIP") {
+        color = 0x55FF55
+        rank = "[VIP]"
+    }
+    if (rank == "VIP_PLUS") {
+        color = 0x55FF55
+        rank = "[VIP+]"
+    }
+    if (rank == "MVP") {
+        color = 0x55FFFF
+        rank = "[MVP]"
+    }
+    if (rank == "MVP_PLUS") {
+        color = 0x55FFFF
+        rank = "[MVP+]"
+    }
+    if (monthlyRank == "SUPERSTAR") {
+        color = 0xFFAA00
+        rank = "[MVP++]"
+    }
+    
+
+    const nameTag = new Text()
+    nameTag.text = (`${rank} ${ign}`).trim()
+    nameTag.fontSize = 2
+    nameTag.color = color
+    nameTag.position.set(0, 20, 0)
+    nameTag.anchorX = "center"
+    nameTag.font = "Minecraftia-Regular.ttf"
+
+    return nameTag
+}
+
+export function renderIGNBG() {
+    const nameTagGeometry = new THREE.PlaneGeometry(10, 2);
+    const nameTagMaterial = new THREE.MeshStandardMaterial({ color: 0xffffff, transparent:true, side: THREE.DoubleSide});
+    const nameTag = new THREE.Mesh(nameTagGeometry, nameTagMaterial);
+    nameTag.position.set(0, 20, 0)
+    return nameTag
 }

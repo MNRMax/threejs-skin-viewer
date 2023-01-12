@@ -1,3 +1,18 @@
+@font-face {
+    font-family: minecraft-font;
+    src: url(Minecraftia-Regular.ttf);
+}
+
+body {
+    font-family: minecraft-font;
+    font-weight: 500;
+}
+
+* {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
 #canvas {
   z-index: -1;
   position: fixed;

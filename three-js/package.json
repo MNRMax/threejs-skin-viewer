@@ -17,6 +17,7 @@
     "node-fetch": "^2.6.7",
     "three": "^0.146.0",
     "three-js": "^79.0.0",
+    "troika-three-text": "^0.47.1",
     "xmlhttprequest": "^1.8.0"
   }
 }

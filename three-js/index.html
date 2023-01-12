@@ -15,12 +15,19 @@
         <button type=submit id="submit">Submit</button>
     </form>
     <div class="stat-dropdowns">
-        <div class="collapsible">
-            <label class="dropdown-text" for="dropdown-icon" onselectstart="return false">Bedwars</label>
-            <span class="material-symbols-outlined dropdown-icon" id="dropdown-icon"  onselectstart="return false">expand_more</span>
+        <div id="bedwars-stats">
+            <div class="collapsible">
+                <label class="dropdown-text" for="dropdown-icon" onselectstart="return false">Bedwars</label>
+                <span class="material-symbols-outlined dropdown-icon" id="dropdown-icon"  onselectstart="return false">expand_more</span>
+            </div>
+            <div class="dropdown" id="bedwars-dropdown"></div>
         </div>
-        <div class="dropdown" id="bedwars-dropdown">
-        <p>Lorem ipsum...</p>
+        <div id="skywars-stats">
+            <div class="collapsible">
+                <label class="dropdown-text" for="dropdown-icon" onselectstart="return false">Skywars</label>
+                <span class="material-symbols-outlined dropdown-icon" id="dropdown-icon"  onselectstart="return false">expand_more</span>
+            </div>
+            <div class="dropdown" id="skywars-dropdown"></div>
         </div>
     </div>
     <script type="module" src="index.js"></script>
