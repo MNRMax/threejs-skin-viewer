@@ -183,6 +183,7 @@ async function displayBWStats(data) {
     <p>Beds Broken: ${stats.beds_broken_bedwars}</p>
     <p>Beds Lost: ${stats.beds_lost_bedwars}</p>
     <p>BB/L: ${round(stats.beds_broken_bedwars/stats.beds_lost_bedwars)}</p>
+    <p>Total Games Played: ${stats.wins_bedwars + stats.losses_bedwars}</p>
     <p>Wins: ${stats.wins_bedwars}\n</p>
     <p>Loses: ${stats.losses_bedwars}\n</p>
     <p>W/L: ${round(stats.wins_bedwars/stats.losses_bedwars)}</p>
@@ -198,6 +199,7 @@ async function displaySWStats(data) {
     `<p>Kills: ${stats.kills}</p>
     <p>Deaths: ${stats.deaths}</p>
     <p>K/D: ${round(stats.kills/stats.deaths)}</p>
+    <p>Total Games Played: ${stats.wins + stats.losses}</p>
     <p>Wins: ${stats.wins}\n</p>
     <p>Loses: ${stats.losses}\n</p>
     <p>W/L: ${round(stats.wins/stats.losses)}</p>
