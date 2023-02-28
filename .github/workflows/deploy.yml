@@ -21,13 +21,13 @@ jobs:
 
       - name: Install dependencies
         working-directory: ./three-js
-        run: npm i
+        run: npm i 
 
       - name: Build project
         working-directory: ./three-js
         run: npm run build
-        
-    - name: Upload production-ready build files
+
+      - name: Upload production-ready build files
         uses: actions/upload-artifact@v2
         with:
           name: production-files
