@@ -38,7 +38,6 @@ jobs:
     if: github.ref == 'refs/heads/main'
 
     steps:
-      -steps:
         - uses: actions/checkout@v3
 
         - uses: actions/download-artifact@v3
