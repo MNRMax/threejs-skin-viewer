@@ -9,7 +9,9 @@ jobs:
   build:
     name: Build
     runs-on: ubuntu-latest
-
+    defaults:
+      run:
+        working-directory: ./three-js
     steps:
       - name: Checkout repo
         uses: actions/checkout@v2
@@ -20,15 +22,12 @@ jobs:
           node-version: 16
 
       - name: Install dependencies
-        working-directory: ./three-js
         run: npm i 
 
       - name: Build project
-        working-directory: ./three-js
         run: npm run build
 
       - name: Upload production-ready build files
-        working-directory: ./three-js
         uses: actions/upload-artifact@v2
         with:
           name: production-files
