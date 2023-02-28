@@ -23,5 +23,4 @@ jobs:
         uses: bahmutov/npm-install@v1
 
       - name: Build project
-        working-directory: ./three-js
         run: npm run build
