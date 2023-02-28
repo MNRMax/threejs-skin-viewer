@@ -21,9 +21,7 @@ jobs:
 
       - name: Install dependencies
         uses: bahmutov/npm-install@v1
-
+        
       - name: Build project
         run: cd three-js
-
-      - name: Build project
         run: npm run build
