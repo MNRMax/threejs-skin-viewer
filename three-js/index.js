@@ -42,11 +42,11 @@ async function renderSkin(name) {
 
     const skin = `https://crafatar.com/skins/${data.uuid}?overlay`
     const capeURL = `https://crafatar.com/capes/${data.uuid}`
-    let hypixelData = await getHypixelProfile(data.uuid)
-    displayBWStats(hypixelData) 
-    displaySWStats(hypixelData)
-    displayClassicStats(hypixelData)
-    displaySumoStats(hypixelData)
+    // let hypixelData = await getHypixelProfile(data.uuid)
+    // displayBWStats(hypixelData) 
+    // displaySWStats(hypixelData)
+    // displayClassicStats(hypixelData)
+    // displaySumoStats(hypixelData)
     // displayBridgeStats(hypixelData)
     // displayUHCStats(hypixelData)
     var img = new Image();
@@ -84,8 +84,9 @@ async function renderSkin(name) {
         const RightLegSleeve = renderRightLegSleeve(skin)
         const LeftLegSleeve = renderLeftLegSleeve(skin)
         const helmet = renderHelmet(skin)
-        console.log(hypixelData.player.newPackageRank)
-        const nameTag = renderIGN(hypixelData.player.newPackageRank, hypixelData.player.monthlyPackageRank, hypixelData.player.displayname)
+        // console.log(hypixelData.player.newPackageRank)
+        // const nameTag = renderIGN(hypixelData.player.newPackageRank, hypixelData.player.monthlyPackageRank, hypixelData.player.displayname)
+        const nameTag = renderIGN("", "", data.username)
 
         if (checkCape(data.uuid)) {
             const cape = renderCape(capeURL)
